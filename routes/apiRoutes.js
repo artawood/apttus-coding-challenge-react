@@ -1,5 +1,5 @@
 const axios = require("axios");
-const router = require("exopress").Router();
+const router = require("express").Router();
 
 router.get("/gitrepos", (req, res) => {
   axios
