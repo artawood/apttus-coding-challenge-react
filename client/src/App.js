@@ -17,7 +17,12 @@ const columns = [
     title: "Repository Name",
     dataIndex: "name",
     key: "name",
-    sorter: (a, b) => a.name - b.name
+    sorter: (a, b) => a.name - b.name,
+    render: (text, record) => (
+      <a rel="noopener noreferrer" target="_blank" href={record.html_url}>
+        {record.name}
+      </a>
+    )
   },
   {
     title: "Description",
@@ -28,7 +33,18 @@ const columns = [
     title: "Stars",
     dataIndex: "stargazers_count",
     key: "stargazers_count",
-    sorter: (a, b) => a.stargazers_count - b.stargazers_count
+    sorter: (a, b) => a.stargazers_count - b.stargazers_count,
+    filters: [
+      {
+        text: "0 - 100",
+        value: 100
+      },
+      {
+        text: ">100",
+        value: 100
+      }
+    ],
+    onFilter: (value, record) => record.stargazers_count.indexOf(value) > 100
   },
   {
     title: "License",
@@ -121,7 +137,9 @@ class App extends Component {
                     style={{ margin: "1% auto", width: "95%" }}
                     columns={columns}
                     dataSource={this.state.repos.items}
+                    size="default"
                     bordered
+                    className="table table-striped"
                   />
                 </div>
               )}
